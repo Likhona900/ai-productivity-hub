@@ -112,7 +112,7 @@ export function AppShell({
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           className="flex size-10 items-center justify-center rounded-xl border border-border text-foreground transition-colors hover:bg-secondary"
         >
-          {open ? <Menu className="size-5" /> : <Menu className="size-5" />}
+          {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </header>
 
