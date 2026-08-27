@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { sampleMeetingNotes, summarizeMeeting, type MeetingSummary } from "@/lib/mock-ai";
+import { summarizeMeetingAi } from "@/lib/ai.functions";
+import { sampleMeetingNotes, type MeetingSummary } from "@/lib/mock-ai";
 
 export const Route = createFileRoute("/meeting-summarizer")({
   head: () => ({
@@ -39,7 +40,7 @@ function MeetingSummarizer() {
     setLoading(true);
     setError("");
     try {
-      setResult(await summarizeMeeting(notes));
+      setResult(await summarizeMeetingAi({ data: { notes } }));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
       setResult(null);

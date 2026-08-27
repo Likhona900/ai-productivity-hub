@@ -9,7 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { generateEmail, type Tone } from "@/lib/mock-ai";
+import { generateEmailAi } from "@/lib/ai.functions";
+import { type Tone } from "@/lib/mock-ai";
 
 export const Route = createFileRoute("/email-generator")({
   head: () => ({
@@ -50,7 +51,9 @@ function EmailGenerator() {
     setLoading(true);
     setError("");
     try {
-      const text = await generateEmail({ purpose, recipient, keyPoints, instructions, tone });
+      const { text } = await generateEmailAi({
+        data: { purpose, recipient, keyPoints, instructions, tone },
+      });
       setOutput(text);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
