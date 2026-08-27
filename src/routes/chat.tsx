@@ -6,7 +6,8 @@ import { AppShell } from "@/components/app-shell";
 import { CopyButton } from "@/components/output-panel";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { chatReply, examplePrompts } from "@/lib/mock-ai";
+import { chatReplyAi } from "@/lib/ai.functions";
+import { examplePrompts } from "@/lib/mock-ai";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
