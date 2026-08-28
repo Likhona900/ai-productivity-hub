@@ -5,6 +5,7 @@ export async function callGateway(
 ): Promise<string> {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("AI is not configured. Please try again later.");
+  console.log("[ai] gateway call start");
 
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
