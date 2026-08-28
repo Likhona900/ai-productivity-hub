@@ -69,19 +69,26 @@ function Chat() {
     if (!trimmed || loading) return;
     setError("");
     setInput("");
-    setMessages((prev) => [
-      ...prev,
+    const next: Message[] = [
+      ...messages,
       { id: `${Date.now()}-u`, role: "user", content: trimmed },
-    ]);
+    ];
+    setMessages(next);
     setLoading(true);
     try {
-      const reply = await chatReply(trimmed);
+      const { text: reply } = await chatReplyAi({
+        data: { messages: next.map(({ role, content }) => ({ role, content })) },
+      });
       setMessages((prev) => [
         ...prev,
         { id: `${Date.now()}-a`, role: "assistant", content: reply },
       ]);
-    } catch {
-      setError("The assistant couldn't respond. Please try sending your message again.");
+    } catch (e) {
+      setError(
+        e instanceof Error
+          ? e.message
+          : "The assistant couldn't respond. Please try sending your message again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -101,7 +108,7 @@ function Chat() {
             <div>
               <p className="font-display text-sm font-semibold">Workplace Assistant</p>
               <p className="text-xs text-muted-foreground">
-                {loading ? "Thinking…" : "Demo responses · always review before use"}
+                {loading ? "Thinking…" : "AI responses · always review before use"}
               </p>
             </div>
           </div>
